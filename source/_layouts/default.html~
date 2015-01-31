@@ -1,0 +1,37 @@
+<html>
+
+  <head>
+    <title>slieb.org</title>
+  </head>
+  
+  <body>
+    <div class="header">
+      <h1><a href="http://slieb.org">slieb.org/</a></h1>
+      <ul>
+	<li><a href="/blog">blog/</a></li>
+	<li><a href="/profile">profile/</a></li>
+	<li><a href="/projects">projects/</a></li>
+      </ul>
+    </div>
+    
+
+
+    <div class="content">
+      <i>content inbound...</i>
+    </div>
+    
+    <div class="footer">
+      <div class="links">
+	<ul>
+	  <li><a href="https://github.com/StefanLiebenberg/">Github Account</a></li>
+	  <li><a href="https://www.linkedin.com/profile/public-profile-settings?trk=prof-edit-edit-public_profile">LinkedIn</a></li>
+      </div>
+      
+
+      <small class="notice">
+	Built with <a href="jekyllrb.com">jekyll</a>, Powered by <a href="linode.com">Linode</a>
+      </small>
+    </div>
+  </body>
+
+</html>
