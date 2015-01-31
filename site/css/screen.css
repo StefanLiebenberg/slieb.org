@@ -66,3 +66,67 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
+
+/* line 8, ../_sass/screen.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 13, ../_sass/screen.scss */
+h1 {
+  font-size: 30px;
+}
+
+/* line 17, ../_sass/screen.scss */
+a {
+  text-decoration: none;
+}
+/* line 19, ../_sass/screen.scss */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 24, ../_sass/screen.scss */
+.header, .content, .footer {
+  padding: 10px 20px;
+}
+
+/* line 28, ../_sass/screen.scss */
+.header {
+  line-height: 30px;
+  margin: 15px 0;
+}
+/* line 31, ../_sass/screen.scss */
+.header a {
+  color: black;
+}
+/* line 35, ../_sass/screen.scss */
+.header .links ul {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+/* line 38, ../_sass/screen.scss */
+.header .links ul li {
+  margin: 10px 0;
+  width: 100px;
+  font-size: 20px;
+}
+/* line 42, ../_sass/screen.scss */
+.header .links ul li a {
+  color: #471317;
+}
+
+/* line 50, ../_sass/screen.scss */
+.content {
+  min-height: 400px;
+}
+
+/* line 54, ../_sass/screen.scss */
+.footer {
+  background: silver;
+  border: solid gray;
+  border-width: 1px 0;
+}
