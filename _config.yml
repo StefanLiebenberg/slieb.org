@@ -1,2 +1,4 @@
 source: source
 destination: site
+gems:
+- jekyll-compass
