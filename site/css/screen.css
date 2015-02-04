@@ -67,66 +67,70 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 8, ../../source/_compass/screen.scss */
+/* line 4, ../../source/_compass/header.sass */
+.header {
+  line-height: 30px;
+  margin: 15px 0;
+}
+/* line 8, ../../source/_compass/header.sass */
+.header a {
+  color: black;
+}
+/* line 13, ../../source/_compass/header.sass */
+.header .links ul li {
+  margin: 10px 20px 10px 0;
+  float: left;
+  font-size: 20px;
+}
+/* line 18, ../../source/_compass/header.sass */
+.header .links ul li a {
+  color: #471317;
+}
+
+/* line 1, ../../source/_compass/footer.sass */
+.footer {
+  background: silver;
+  border: solid gray;
+  border-width: 1px 0;
+}
+
+/* line 1, ../../source/_compass/content.sass */
+.content {
+  min-height: 400px;
+}
+
+/* line 3, ../../source/_compass/pages/home.sass */
+.posts .post {
+  border: 1px solid black;
+  padding: 10px;
+  background: silver;
+}
+/* line 8, ../../source/_compass/pages/home.sass */
+.posts .post small {
+  font-size: 10px;
+}
+
+/* line 13, ../../source/_compass/screen.scss */
 html, body {
   margin: 0;
   padding: 0;
 }
 
-/* line 13, ../../source/_compass/screen.scss */
+/* line 18, ../../source/_compass/screen.scss */
 h1 {
   font-size: 30px;
 }
 
-/* line 17, ../../source/_compass/screen.scss */
+/* line 22, ../../source/_compass/screen.scss */
 a {
   text-decoration: none;
 }
-/* line 19, ../../source/_compass/screen.scss */
+/* line 24, ../../source/_compass/screen.scss */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 24, ../../source/_compass/screen.scss */
+/* line 29, ../../source/_compass/screen.scss */
 .header, .content, .footer {
   padding: 10px 20px;
-}
-
-/* line 28, ../../source/_compass/screen.scss */
-.header {
-  line-height: 30px;
-  margin: 15px 0;
-}
-/* line 31, ../../source/_compass/screen.scss */
-.header a {
-  color: black;
-}
-/* line 35, ../../source/_compass/screen.scss */
-.header .links ul {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-}
-/* line 38, ../../source/_compass/screen.scss */
-.header .links ul li {
-  margin: 10px 0;
-  width: 100px;
-  font-size: 20px;
-}
-/* line 42, ../../source/_compass/screen.scss */
-.header .links ul li a {
-  color: #471317;
-}
-
-/* line 50, ../../source/_compass/screen.scss */
-.content {
-  min-height: 400px;
-}
-
-/* line 54, ../../source/_compass/screen.scss */
-.footer {
-  background: silver;
-  border: solid gray;
-  border-width: 1px 0;
 }
