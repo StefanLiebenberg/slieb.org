@@ -1,4 +1,4 @@
-_site/
+site/
 .sass-cache/
 source/_sass/.sass-cache/
 .bundle

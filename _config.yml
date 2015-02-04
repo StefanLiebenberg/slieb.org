@@ -1,4 +1,9 @@
 source: source
 destination: site
+excerpt_separator: ""
+highlighter: rouge
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+markdown: redcarpet
 gems:
 - jekyll-compass
+- rouge
