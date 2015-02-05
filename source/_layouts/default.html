@@ -13,7 +13,7 @@
 
   <body>
     <div class="header">
-      <h1><a href="/">slieb {% if page.slug %} / {{ page.slug }} {% endif %}</a></h1>
+      <h1><a href="/">slieb</a> {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} - <a href="{{ page.url }}">{{ page.title }}</a>{% endif %}{% endif %}</h1>
 
       <!--<div class="links">-->
         <!--<ul>-->
@@ -33,22 +33,22 @@
     <div class="footer">
 
       <div class="footer-content">
-        <div class="links">
-          <ul>
-            <li><a href="https://github.com/StefanLiebenberg/">Github Account</a></li>
-            <li><a href="https://www.linkedin.com/pub/stefan-liebenberg/1a/b6b/262">LinkedIn</a></li>
-          </ul>
-          <br/>
-        </div>
+        <!--<div class="links">-->
+          <!--<ul>-->
+            <!--<li><a href="https://github.com/StefanLiebenberg/">Github Account</a></li>-->
+            <!--<li><a href="https://www.linkedin.com/pub/stefan-liebenberg/1a/b6b/262">LinkedIn</a></li>-->
+          <!--</ul>-->
+          <!--<br/>-->
+        <!--</div>-->
 
         <div class="licence">
-          <small class="licence">
+          <small class="licence" style="line-height:20px;vertical-align:middle">
             <a rel="license"
                href="http://creativecommons.org/licenses/by/4.0/"><img
                     alt="Creative Commons License"
-                    style="border-width:0"
+                    style="border-width:0;width:80px;height:15px;margin:0 2px;"
                     src="https://i.creativecommons.org/l/by/4.0/80x15.png"
-                    /></a><br/><span
+                    /></a><span
                   xmlns:dct="http://purl.org/dc/terms/" property="dct:title">slieb.org</span> by
             <a xmlns:cc="http://creativecommons.org/ns#" href="http://slieb.org" property="cc:attributionName"
                rel="cc:attributionURL">Stefan Liebenberg</a> is licensed under a

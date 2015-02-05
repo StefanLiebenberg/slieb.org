@@ -3,8 +3,10 @@ layout: default
 ---
 
 <div class="post">
-  <h2 class="title">{{ page.title }}</h2>
-  <small>Published: {{ page.date }}</small>
+
+  <div class="post-details">
+    <b>published</b>: {{ page.date }}<br/>
+  </div>
 
   <div class="post-content">
     {{ content }}
