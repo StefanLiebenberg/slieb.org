@@ -2,12 +2,9 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
-
 @import "header";
 @import "footer";
 @import "content";
-
 @import "post";
 @import "pages/home";
 
@@ -34,4 +31,32 @@ a {
 .highlight {
   padding: 20px;
   margin: 10px 0;
+}
+
+.warning, .notice {
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px 0;
+}
+
+.notice {
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.warning {
+  background-color: pink;
+  border-color: maroon;
+}
+
+ul li {
+  list-style: disc inside;
+}
+
+h2 {
+  margin: 20px 0;
+}
+
+h3 {
+  margin: 15px 0;
 }

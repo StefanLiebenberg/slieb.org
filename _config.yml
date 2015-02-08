@@ -4,6 +4,9 @@ excerpt_separator: ""
 highlighter: rouge
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: redcarpet
+permalink: /blog/:title
 gems:
 - jekyll-compass
 - rouge
+- jekyll-last-modified-at
+

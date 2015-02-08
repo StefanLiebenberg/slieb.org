@@ -1,7 +1,6 @@
-PREVIEW_OPTIONS=--draft
+PREVIEW_OPTIONS=-D --future --unpublished
 BUILD_OPTIONS=
 INSTALL_OPTIONS=
-
 
 master:
 	bundle exec jekyll build $(BUILD_OPTIONS)

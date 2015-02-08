@@ -4,16 +4,17 @@ layout: default
 
 <br class="clear"/>
 
-
 <div class="posts">
-
+  <h2>Posts</h2>
+  
   {% for post in site.posts %}
+
   <div class="post">
-    <a href="{{ post.url }}">
-      <span class="title">{{ post.title }}</span>
-    </a><br />
-    <small class="published">{{ post.date }}</small>
+    <a href="{{ post.url }}"><span class="title">{{ post.title }}</span></a><br/>
+    <small class="published">{{ post.date | date: '%B %d, %Y' }}</small>
   </div>
+
+  <br/><br/>
   {% endfor %}
 </div>
 
