@@ -13,3 +13,6 @@ serve:
 
 install:
 	bundle install $(INSTALL_OPTIONS)
+
+release:
+	git checkout master && git merge preview && git checkout preview;	
