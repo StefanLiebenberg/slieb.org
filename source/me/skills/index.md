@@ -1,6 +1,7 @@
 ---
 layout: profile
 slug: me / skills
+published: false
 ---
 
 I consider myself a driven full stack developer that cares about the work I do.
