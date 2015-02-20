@@ -1,12 +1,10 @@
 ---
 layout: default
+hide_links: true
 ---
 
 <div class="post">
   <div class="post-details">
-    {% unless page.published %}
-      <p class="warning">Please note this is an unpublished document, probably still in draft phase.</p>
-    {% endunless %}
     <b>created</b>: {{ page.date | date: '%B %d, %Y' }}<br/>
     <b>updated</b>: {{ page.last_modified_at | date: '%B %d, %Y'  }}<br/>
   </div>

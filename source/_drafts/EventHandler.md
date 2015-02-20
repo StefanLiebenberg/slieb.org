@@ -11,7 +11,6 @@ Managing events in the component lifecycle is made very easy with the use of goo
 
 
 
-
 ## enterDocument
 
 ```javascript
