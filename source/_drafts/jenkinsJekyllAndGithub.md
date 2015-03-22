@@ -1,13 +1,26 @@
 ---
 layout: post
-title: Jenkins, Jekyll and Apache. Building a lightweight but powerfull website.
+title: Creating Jenkins, Jekyll and Apache to build a lightweight but powerfull website.
 ---
 
+[Jekyll][1]
 
-- create a jekyll site
-- commit to github
+Once you have a working jekyll, webserver you can make it more complex. Try adding compass or other plugins.
+
+### Version Control
+
+```shell
+git init .
+```
+
+### Deploying
+
+
 - create a jenkins install
 - install apache
 - with preview site
 - with authentication on preview site
 - with rollback ability
+
+
+[1]:/blog/jekyll

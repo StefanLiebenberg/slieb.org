@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>slieb {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} - {{ page.title }}{% endif %}{% endif %}</title>
-    {% include stylesheets.html %}
-  </head>
+---
+layout: blank
+---
 
-  <body>
+{% unless page.published %}
+<div class="feedback alert">
+  This page{% if page.title %}, titled "{{ page.title }}",{% endif %} has not been published yet.
+</div>
+{% endunless %}
 
-    {% unless page.published %}
-    <div class="feedback alert">
-      This page{% if page.title %}, titled "{{ page.title }}",{% endif %} has not been published yet.
-    </div>
-    {% endunless %}
-
-    <div class="container">
+<div class="container">
 
 
-      {% include header.html %}
+  {% include header.html %}
 
-      <div class="content span-24 last">
-        {{content}}
-      </div>
+  <div class="content span-24 last">
+    {{content }}
+  </div>
 
-      {% include footer.html %}
+  {% include footer.html %}
 
-    </div>
-  </body>
-</html>
+</div>

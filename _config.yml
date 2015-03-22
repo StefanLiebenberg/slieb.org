@@ -5,10 +5,14 @@ highlighter: rouge
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: redcarpet
 permalink: /blog/:title
-paginate: 3
+paginate: 5
 paginate_path: "/page/:num/"
 gems:
 - jekyll-compass
 - rouge
 - jekyll-last-modified-at
 
+redcarpet:
+  extensions:
+  - tables
+  - autolink

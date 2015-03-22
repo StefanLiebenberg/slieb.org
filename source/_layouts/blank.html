@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>slieb {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} - {{ page.title }}{% endif %}{% endif %}</title>
+    {% include stylesheets.html %}
+  </head>
+  <body>
+    {{content }}
+  </body>
+</html>
