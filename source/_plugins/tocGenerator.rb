@@ -98,7 +98,6 @@ module Jekyll
         end
         doc.css('body').children.to_xhtml(indent:3, indent_text:" ")
       else
-        puts "F";
         return html
       end
     end
