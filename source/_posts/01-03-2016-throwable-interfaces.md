@@ -4,17 +4,15 @@ title: Java 8 Functional Interfaces with Exceptions
 published: true
 ---
 
-##Pre-Amble:
-
-Java 8 Lambdas allow us to write code that is very compact, yet readable. One limitation is that checked exceptions gets in the way. Consider the following 
-method:
-
+One problem with using lambda's in Java 8, is that dealing with checked exceptions can result in too much code. Consider a lambda of `Function` where you 
+need to deal with an `IOException`: 
 
 ```java
-public Stream<File> findFiles(List<File> directories) {
-  return directories.stream().flatMap(dir -> {
+public Stream<String> readFiles(List<File> files) {
+  return files.stream().map(file -> {
     try {
-      return Files.walk(dir.toPath());
+      // some method that throws IOException
+      return IOUtils.toString(file); 
     } catch(IOException io) {
       throw new RuntimeException(io);
     }
@@ -22,19 +20,19 @@ public Stream<File> findFiles(List<File> directories) {
 }
 ```
 
-Rethrowing the `IOException` in all lambda statements is a tedious enterprise, so we could create a helper method:
+To add `try-catch` statements in all of our lambda's is a tedious exercise, and only helps us hide exceptions. We can start to improve the situation with 
+the following helper method:
  
  
 ```java
+@FunctionalInterface
+public interface FunctionWithIO<A, B> {
 
-public class FunctionHelper { 
-
-  @FunctionalInterface
-  public interface FunctionWithIO<A, B> {
-    B apply(A value) throws IOException;
-  }
-
-  public static <A, B> Function<A, B> safeFunction(final FunctionWithIO<A, B> functionWithIO) {
+  // The functional interface method, notice it declares a throws exception.
+  B apply(A value) throws IOException;
+  
+  // helper method to catch the declared method and rethrow as a checked exception.
+  public static <A, B> Function<A, B> toSafeFunction(final FunctionWithIO<A, B> functionWithIO) {
     return (value) -> {
       try {
         return functionWithIO.apply(value);
@@ -49,10 +47,15 @@ public class FunctionHelper {
 And now our original method is simplified to:
 
 ```java
-public Stream<File> findFiles(List<File> directories) {
-  return directories.stream().flatMap(FunctionHelper.safeFunction(dir -> Files.walk(dir.toPath()));
+public Stream<String> readFiles(List<File> files) {
+  return files.stream().map(FunctionWithIO.toSafeFunction(file -> {
+      // some method that throws IOException
+      return IOUtils.toString(file);
+  }));
 }
 ```
+
+We can take this further...
 
 ##The Library
 
