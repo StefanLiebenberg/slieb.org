@@ -1,6 +1,7 @@
 ---
 layout: default
 title: goog.Disposable
+published: true
 ---
 
 
