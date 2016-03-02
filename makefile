@@ -14,8 +14,11 @@ serve:
 install:
 	bundle install $(INSTALL_OPTIONS)
 
-release:
+commit:
+	git commit -va
+
+release: commit
 	git checkout master && git merge preview && git checkout preview;	
 
-deploy:
-    git push --all
+deploy: release
+	git push --all
