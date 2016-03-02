@@ -259,18 +259,6 @@ You can chain these methods together:
     .collect(Collectors.toList());
 ```
 
- 
-
-###Features:
-
-* All "WithThrowable" interfaces extend the corresponding interfaces in `java.util.function.*`, so you can use them in the sample methods ( eg, Stream, 
-Optional, etc ) 
-* If an exception occurs inside these methods, it is rethrown as a SuppressedException, which is unchecked. So you can always catch it again. The 
-SuppressedException.unwrapSuppressedException() is a utility method that does this for you. 
-* There is exception handling baked into the "WithThrowable" classes, see the methods `.thatReturnsOptional()`, `.thatThrowsNothing()`, `.onException()` 
-and `.withLogging()`
- 
-
 
 Here is a few example cases with [FunctionWithThrowable][3]
 
