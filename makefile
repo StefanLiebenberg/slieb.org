@@ -16,3 +16,6 @@ install:
 
 release:
 	git checkout master && git merge preview && git checkout preview;	
+
+deploy:
+    git push --all
