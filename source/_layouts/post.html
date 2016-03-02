@@ -4,12 +4,16 @@ hide_links: true
 ---
 
 <div class="post">
-  <div class="post-details">
-    <b>created</b>: {{ page.date | date: '%B %d, %Y' }}<br/>
-    <b>updated</b>: {{ page.last_modified_at | date: '%B %d, %Y'  }}<br/>
-  </div>
+    <div class="post-details">
+        <b>created</b>: {{ page.date | date: '%B %d, %Y' }}<br/>
+        <b>updated</b>: {{ page.last_modified_at | date: '%B %d, %Y' }}<br/>
+    </div>
 
-  <div class="post-content">
-    {{ content }}
-  </div>
+    <div class="post-content">
+        {{ content }}
+    </div>
+
+    <div class="comments">
+        <b>Comments? Leave them <a href="https://github.com/StefanLiebenberg/slieb.org/issues">here</a></b>
+    </div>
 </div>
