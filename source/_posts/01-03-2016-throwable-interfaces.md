@@ -112,11 +112,154 @@ public List<String> readFiles(List<File> files) {
 
 ##The Library
 
-To solve this problem for all interfaces, I've created [throwable-interfaces][1] ( on [github][2] ). For any Functional interface Foo in `java.util.function.*` 
-this library will provide a corresponding "WithThrowable" interface. 
+To solve this problem for all interfaces and for exceptions other than just IOException, I've created [throwable-interfaces][1] ( on [github][2] ). For any 
+Functional interface in `java.util.function.*` this library will provide a corresponding "WithThrowable" interface. 
 
 For example, there is a `Function<A, B>` interface in `java.util.function.*`, so there the library provides a `FunctionWithThrowable<A, B, E extends 
-Throwable>` interface.  
+Throwable>` interface in the library.
+
+###Cast Method
+
+Each interface has a "cast...WithThrowable" method that just casts any lambda into the WithThrowable version.
+
+```java
+  files.stream()
+     .filter(PredicateWithThrowable.castPredicateWithThrowable(file -> detectMimeType(file).equals("text/html"))) // PredicateWithThrowable example
+     .map(FunctionWithThrowable.castFunctionWithThrowable(IOUtils::toString))                                     // FunctionWithThrowable example
+     .forEach(ConsumerWithThrowable.castConsumerWithThrowable(content -> {                                        // ConsumerWithThrowable example
+        // do stuff with content that throws Exception.
+     });
+```
+
+###Convert Method
+
+If you use the WithThrowable interface in methods, you might sometimes want to pass in a original interface. Each WithThrowable interface implements a "as..
+.WithThrowable()" method to aid the conversion.
+ 
+```java
+  public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File, String, IOException> functionWithThrowable) {
+    return files.stream().map(functionWithThrowable).collect(Collectors.toList());
+  }
+  
+  public List<String> mapFiles(List<File> files, Function<File, String> function) {
+    return mapFilesWithIO(files, FunctionWithThrowable.asFunctionWithThrowable(function)); // contrived example to demonstrate conversion.
+  }
+```
+
+###SuppressedException and unwrapping
+
+Instead of throwing a new instance of RuntimeException method, the WithThrowable interfaces will always wrap any caught exceptions as `SuppressedExceptions',
+ so that you can catch them specifically. Here is three different ways you can unwrap exceptions.
+ 
+```java
+public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File, String, IOException> functionWithThrowable) throws Throwable {
+  try {
+    return files.stream().map(functionWithThrowable).collect(Collectors.toList());
+  } catch(SuppressedException e) {
+    throw e.getCause();
+  }
+}
+```
+
+```java
+public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File, String, IOException> functionWithThrowable) throws IOException {
+  try {
+    return files.stream().map(functionWithThrowable).collect(Collectors.toList());
+  } catch(SuppressedException e) {
+    throw SuppressedException.unwrapException(e, IOException.class).orElseThrow(() -> e);
+  }
+}
+```
+
+
+```java
+public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File, String, IOException> functionWithThrowable) throws IOException {
+  return SuppressedException.unwrapException(() -> {
+    return files.stream().map(functionWithThrowable).collect(Collectors.toList());
+  }, IOException.class);
+}
+```
+
+
+###Exception Handling
+
+All the WithThrowable interfaces have some level of exception handling. All interfaces have the `.onException()` and `.withLogging()` methods. Interfaces 
+that return a value has the `.thatReturnsOptional()` method, and interfaces with void methods have the `.thatThrowsNothing()` method.
+
+####onException()
+
+The `onException()` method allows you define some custom exception handling code. eg
+
+```java
+  files.stream().forEach(
+      ConsumerWithThrowable.castConsumerWithThrowable(file -> {
+        // do some io stuff with file.
+      }).onException(exception, args -> {
+        // do something with the exception ( logging? ) and the args passed to consumer
+      })
+    );
+```
+
+####withLogging()
+
+The `withLogging()` will log any exceptions to a slf4j logger.
+
+```java
+  files.stream().forEach(
+      ConsumerWithThrowable.castConsumerWithThrowable(file -> {
+        // do some io stuff with file.
+      }).withLogging())
+    );
+```
+
+####thatThrowsNothing()
+
+The `thatThrowsNothing()` method will ignore any exceptions. 
+
+```java
+  files.stream().forEach(
+      ConsumerWithThrowable.castConsumerWithThrowable(file -> {
+        // do some io stuff with file.
+      }).thatThrowsNothing())
+    );
+```
+
+
+####thatReturnsOptional()
+
+The `.thatReturnsOptional()` will change the return type into an optional that will be empty if an exception was caught.
+
+```java
+  List<Optional<String>> readAttempts = files.stream()
+    .map(FunctionWithThrowable.castConsumerWithThrowable(file -> {
+        return IOUtils.toString(file);
+    }).thatReturnsOptional()))
+    .collect(Collectors.toList());
+```
+
+You can chain these methods together:
+
+
+```java
+  files.stream().forEach(ConsumerWithThrowable
+     .castConsumerWithThrowable(file -> {
+        // do some io stuff with file.
+     })
+     .withLogging()
+     .thatThrowsNothing())
+   );
+   
+  List<Optional<String>> readAttempts = files.stream()
+    .map(
+      FunctionWithThrowable
+      .castConsumerWithThrowable(file -> IOUtils.toString(file))
+      .onException(exception, args -> System.err.println(exception.getMessage()))
+      .thatReturnsOptional())
+    )
+    .collect(Collectors.toList());
+```
+
+ 
 
 ###Features:
 
@@ -124,7 +267,7 @@ Throwable>` interface.
 Optional, etc ) 
 * If an exception occurs inside these methods, it is rethrown as a SuppressedException, which is unchecked. So you can always catch it again. The 
 SuppressedException.unwrapSuppressedException() is a utility method that does this for you. 
-* There is exception handling baked into the "WithThrowable" classes, see the methods `.thatReturnsOptional()`, `.thatDoesNothing()`, `.onException()` 
+* There is exception handling baked into the "WithThrowable" classes, see the methods `.thatReturnsOptional()`, `.thatThrowsNothing()`, `.onException()` 
 and `.withLogging()`
  
 
