@@ -4,24 +4,29 @@ title: Java 8 Functional Interfaces with Exceptions
 published: true
 ---
 
-One problem with using lambda's in Java 8, is that dealing with checked exceptions can result in too much code. Consider a lambda of `Function` where you 
-need to deal with an `IOException`: 
+One problem with using lambda's in Java 8, is that dealing with checked exceptions results in unnecessary exception handling code. Consider a lambda of 
+`Function` where you  need to deal with an `IOException`: 
+
 
 ```java
-public Stream<String> readFiles(List<File> files) {
-  return files.stream().map(file -> {
+public List<String> mapFiles(List<File> files,  Function<File, String> function) {
+  return files.stream().map(function).collect(Collectors.toList());
+}
+
+public List<String> readFiles(List<File> files) {
+  return mapFiles(files, FunctionWithIO.toSafeFunction(file -> {
     try {
       // some method that throws IOException
-      return IOUtils.toString(file); 
+      return IOUtils.toString(file);   
     } catch(IOException io) {
       throw new RuntimeException(io);
     }
-  });
+  }));
 }
 ```
 
 To add `try-catch` statements in all of our lambda's is a tedious exercise, and only helps us hide exceptions. We can start to improve the situation with 
-the following helper method:
+the following interface and helper method:
  
  
 ```java
@@ -46,9 +51,14 @@ public interface FunctionWithIO<A, B> {
 
 And now our original method is simplified to:
 
+
 ```java
-public Stream<String> readFiles(List<File> files) {
-  return files.stream().map(FunctionWithIO.toSafeFunction(file -> {
+public List<String> mapFiles(List<File> files,  Function<File, String> function) {
+  return files.stream().map(function).collect(Collectors.toList());
+}
+
+public List<String> readFiles(List<File> files) {
+  return mapFiles(files, FunctionWithIO.toSafeFunction(file -> {
       // some method that throws IOException
       return IOUtils.toString(file);
   }));
@@ -56,6 +66,49 @@ public Stream<String> readFiles(List<File> files) {
 ```
 
 We can take this further...
+
+Currently, if needed checked exceptions thrown inside a `forEach` or `map` method on Stream, we have to use `toSafeFunction` to turn this interface into a 
+usable `Function` interface. If the interface `FunctionWithIO` extended the original `Function` interface, it could be used directly.  
+
+
+```java
+@FunctionalInterface
+public interface FunctionWithIO<A, B> extends Function<A, B> {
+
+  // The functional interface method, notice it declares a throws exception.
+  B applyWithIO(A value) throws IOException();
+
+  @Overwrite
+  default B apply(A value) {
+      try {
+        return functionWithIO.apply(value);
+      } catch(IOException io) {
+        throw new RuntimeException(io);  
+      }  
+  }
+  
+  // helper method to cast lambda's as FunctionWithIO.
+  public static <A, B> FunctionWithIO<A, B> castFunctionWithIO(final FunctionWithIO<A, B> functionWithIO) {
+     return functionWithIO;
+  }
+}
+```
+
+Now we only have to specify that its the 'WithIO' interface in mapFile's, and everything is taken care of.
+
+```java
+public List<String> mapFiles(List<File> files,  FunctionWithIO<File, String> functionWithIO) {
+  return files.stream().map(functionWithIO).collect(Collectors.toList());
+}
+
+public List<String> readFiles(List<File> files) {
+  return mapFiles(files, file -> {
+      // some method that throws IOException
+      return IOUtils.toString(file);
+  });
+}
+```
+
 
 ##The Library
 
