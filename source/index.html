@@ -38,7 +38,11 @@ published: true
   {% for post in paginator.posts %}
 
   <div class="post">
-    <a href="{{ post.url }}"><span class="title">{{ post.title }}</span></a><br/>
+    <a href="{{ post.url }}"><span class="title">{{ post.title }}</span></a>
+    {% unless post.published %}
+      <span class="notice">Unpublished</span>
+    {% endunless %}
+    <br/>
     <small class="published">{{ post.date | date: '%B %d, %Y' }}</small>
     <br/><br />
   </div>

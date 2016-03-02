@@ -6,12 +6,13 @@ published: true
 ##Hi, I'm Stefan.
 
 I consider myself a driven full stack developer that cares about the work I do. I love programing and find great interest in different design patterns. I've 
-been working remotely for Betgenius Limited since 2011.
+been working remotely for Betgenius Limited since 2011. 
 
 ###Working Environment of choice
 - Arch linux
 - Cinnamon DE
 - Intellij IDE 
+- Git
 
 ###Languages I know
 - JavaScript
@@ -26,12 +27,10 @@ been working remotely for Betgenius Limited since 2011.
 - C++
 - Deutch?
 
-### Technologies I'm consider myself an expert in.
-- Google Closure ( and associated tools )
+### Technologies I've worked with
+- Google Closure ( javascript compiler, javascript library, soy templates, google stylesheets, etc )
 - Maven
 - Guice
-
-### Technologies I've worked with
 - Magento
 - Ruby on Rails
 - JQuery
