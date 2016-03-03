@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Creating Jenkins, Jekyll and Apache to build a lightweight but powerfull website.
+topic: blogging
+title: Using Jenkins, Jekyll and Apache to build a lightweight but powerfull website.
 ---
 
 [Jekyll][1]
