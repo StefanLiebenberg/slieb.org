@@ -17,7 +17,7 @@ install:
 commit:
 	git commit -va
 
-release: commit
+release:
 	git checkout master && git merge preview && git checkout preview;	
 
 deploy: release
