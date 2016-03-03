@@ -127,7 +127,10 @@ Each interface has a "cast...WithThrowable" method that just casts any lambda in
      .filter(PredicateWithThrowable.castPredicateWithThrowable(file -> detectMimeType(file).equals("text/html"))) // PredicateWithThrowable example
      .map(FunctionWithThrowable.castFunctionWithThrowable(IOUtils::toString))                                     // FunctionWithThrowable example
      .forEach(ConsumerWithThrowable.castConsumerWithThrowable(content -> {                                        // ConsumerWithThrowable example
-        // do stuff with content that throws Exception.
+        if(content.isEmpty()) {
+          throw new Exception("empty content not allowed");
+        }
+        System.out.println("Found content: " + content);
      });
 ```
 
@@ -146,7 +149,7 @@ If you use the WithThrowable interface in methods, you might sometimes want to p
   }
 ```
 
-###SuppressedException and unwrapping
+###Rethrowing SuppressedException
 
 Instead of throwing a new instance of RuntimeException method, the WithThrowable interfaces will always wrap any caught exceptions as `SuppressedExceptions',
  so that you can catch them specifically. Here is three different ways you can unwrap exceptions.
@@ -166,7 +169,7 @@ public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File,
   try {
     return files.stream().map(functionWithThrowable).collect(Collectors.toList());
   } catch(SuppressedException e) {
-    throw SuppressedException.unwrapException(e, IOException.class).orElseThrow(() -> e);
+    throw SuppressedException.unwrapSuppressedException(e, IOException.class).orElseThrow(() -> e);
   }
 }
 ```
@@ -174,17 +177,21 @@ public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File,
 
 ```java
 public List<String> mapFilesWithIO(List<File> files, FunctionWithThrowable<File, String, IOException> functionWithThrowable) throws IOException {
-  return SuppressedException.unwrapException(() -> {
+  return SuppressedException.unwrapSuppressedException(() -> {
     return files.stream().map(functionWithThrowable).collect(Collectors.toList());
   }, IOException.class);
 }
 ```
+
+It is worth noting that SuppressedExceptions.unwrapSuppressedExceptions is not made to deal with the case where you have multiple types of exceptions to 
+rethrow.
 
 
 ###Exception Handling
 
 All the WithThrowable interfaces have some level of exception handling. All interfaces have the `.onException()` and `.withLogging()` methods. Interfaces 
 that return a value has the `.thatReturnsOptional()` method, and interfaces with void methods have the `.thatThrowsNothing()` method.
+
 
 ####onException()
 
