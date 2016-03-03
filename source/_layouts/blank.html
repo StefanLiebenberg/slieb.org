@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    {% if page.redirect %}
+      <meta http-equiv="refresh" content="0; url={{ page.redirect }}" />
+    {% endif %}
     <title>slieb {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} - {{ page.title }}{% endif %}{% endif %}</title>
     {% include stylesheets.html %}
 </head>
