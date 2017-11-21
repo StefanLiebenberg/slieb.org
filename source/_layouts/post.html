@@ -15,10 +15,10 @@ hide_links: true
 
 
         {% unless page.tags != '' %}
-        <b>Tags:</b>
-        {% for tag in page.tags %}
-        <i>{{ tag }}</i>
-        {% endfor %}
+          <b>Tags:</b>
+            {% for tag in page.tags %}
+              <i>{{ tag }}</i>
+            {% endfor %}
         <br/>
         {% endunless %}
 
