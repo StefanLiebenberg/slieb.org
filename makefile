@@ -18,7 +18,10 @@ commit:
 	git commit -va
 
 release:
-	git checkout master && git merge preview && git checkout preview;	
+	git checkout master && git merge preview && git checkout preview;
 
 deploy: release
 	git push --all
+
+setup:
+	gem install bundler --no-ri --no-rdoc
