@@ -5,30 +5,29 @@ hide_links: true
 
 <div class="post">
 
+    {% if page.description %}
     <div class="description span-20">
-      {% if page.description %}
         <b>Description:</b>&nbsp;{{ page.description }}
-      {% endif %}
     </div>
+    {% endif %}
 
-    <div class="post-details span-4 last">
+    <div class="post-details span-24 last">
 
 
-
-        {% if page.tags %}
-          <b>Tags:</b>
-          {% for tag in page.tags %}
-            <i>{{ tag }}</i>
-          {% endfor %}
-          <br />
-        {% endif %}
+        {% unless page.tags != '' %}
+        <b>Tags:</b>
+        {% for tag in page.tags %}
+        <i>{{ tag }}</i>
+        {% endfor %}
+        <br/>
+        {% endunless %}
 
         <b>created</b>: {{ page.date | date: '%B %d, %Y' }}<br/>
         <b>updated</b>: {{ page.last_modified_at | date: '%B %d, %Y' }}<br/>
 
     </div>
 
-    <div class="post-content">
+    <div class="post-content span-24 last">
 
         {{ content }}
     </div>
