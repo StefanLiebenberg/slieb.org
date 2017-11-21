@@ -4,12 +4,32 @@ hide_links: true
 ---
 
 <div class="post">
-    <div class="post-details">
+
+    <div class="description span-20">
+      {% if page.description %}
+        <b>Description:</b>&nbsp;{{ page.description }}
+      {% endif %}
+    </div>
+
+    <div class="post-details span-4 last">
+
+
+
+        {% if page.tags %}
+          <b>Tags:</b>
+          {% for tag in page.tags %}
+            <i>{{ tag }}</i>
+          {% endfor %}
+          <br />
+        {% endif %}
+
         <b>created</b>: {{ page.date | date: '%B %d, %Y' }}<br/>
         <b>updated</b>: {{ page.last_modified_at | date: '%B %d, %Y' }}<br/>
+
     </div>
 
     <div class="post-content">
+
         {{ content }}
     </div>
 

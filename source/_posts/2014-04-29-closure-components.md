@@ -9,22 +9,6 @@ In google closure, understanding the <code>goog.ui.Component</code> lifecycle
 is a important part of understanding the library. The component provides a
 interface to manage all the aspects of a given element.
 
-### Components are **disposable**
-
-This means that it can and must be disposed of when you are done using it.
-
-{% highlight javascript %}
-   // create component;
-   var component = new my.Component();
-
-   // do things with component
-   component.render();
-
-   // when done with component:
-   component.dispose(); // destroys the component, all event listeners and other
-                        // disposable objects attached to the component
-{% endhighlight %}
-
 ### The <b>render</b> and <b>decorate</b> methods
 
 A component can be created in two ways.
@@ -46,6 +30,57 @@ A component can be created in two ways.
    button.render();
 {% endhighlight %}
 
+
+
+### Components are **disposable**
+
+This means that it can and must be disposed of when you are done using it.
+
+{% highlight javascript %}
+   // create component;
+   var component = new my.Component();
+
+   // do things with component
+   component.render();
+
+   // when done with component:
+   component.dispose(); // destroys the component, all event listeners and other
+                        // disposable objects attached to the component
+{% endhighlight %}
+
+### Components are Re-usable
+
+A component can be re-usable.
+
+Reuse with decoration:
+
+{% highlight javascript %}
+  var buttonElement = goog.dom.getElementByClass(goog.getCssName('my-button-element'));
+
+  var button = new goog.ui.Button();
+  button.decorate(element);
+  button.exitDocument();
+  
+  
+  var otherButtonElement = goog.dom.getElementByClass(goog.getCssName('my-other-button-element'));
+  button.decorate(otherButtonElement);
+{% endhighlight %}
+
+
+Reuse with rendering:
+
+{% highlight javascript %}
+
+  var button = new goog.ui.Button();
+  button.render();
+  button.exitDocument();
+ 
+  button.render();
+{% endhighlight %}
+
+
+
+
 ### The <b>createDom</b> and <b>decorateInternal</b> methods
 
 
@@ -55,7 +90,7 @@ A component can be created in two ways.
     * @extends {goog.ui.Component}
     */
    my.Component = function () {
-      goog.base(this);
+      my.Component.base(this, 'constructor');
    };
    goog.inherits(my.Component, goog.ui.Component);
 
@@ -91,7 +126,7 @@ When a component enters the document, enterDocument is called and when it leaves
 Let us consider a example where you have a component with composes a button which it needs to decorate and listen to.
 
 
-<p class="alert"><b>Warning:</b> Don't forget the goog.base calls when overriding enter and exitDocument</p>
+<p class="alert"><b>Warning:</b> Don't forget the my.Component.base calls when overriding enter and exitDocument</p>
 {% highlight javascript %}
 
  /**
@@ -99,7 +134,7 @@ Let us consider a example where you have a component with composes a button whic
   * @extends {goog.ui.Component}
   */
  my.Component = function () {
-    goog.base(this);
+    my.Component.base(this, 'constructor');
 
     /** @type {goog.ui.Button} */
     this.button = new goog.ui.Button();
@@ -112,7 +147,7 @@ Let us consider a example where you have a component with composes a button whic
    * @override
    */
   my.Component.prototype.enterDocument = function () {
-    goog.base(this, 'enterDocument');
+    my.Component.base(this, 'enterDocument');
 
     /** @type {goog.events.EventHandler} */
     this.lifecycle = new goog.events.EventHandler(this);
@@ -133,10 +168,11 @@ Let us consider a example where you have a component with composes a button whic
 
     this.button.exitDocument();
 
+    // this disposes the lifecycle, we might re-use this component before calling .dispose() on it, so we want to drop anything listeners 
     if(goog.isDefAndNotNull(this.lifecycle)) {
       this.lifecycle.dispose();
     }
-    goog.base(this, 'exitDocument');
+    my.Component.base(this, 'exitDocument');
   };
 
 
@@ -151,6 +187,8 @@ Let us consider a example where you have a component with composes a button whic
 
 
 
+
+
 ### A complete example component.
 
 {% highlight javascript %}
@@ -160,7 +198,7 @@ Let us consider a example where you have a component with composes a button whic
   * @extends {goog.ui.Component}
   */
  my.Component = function () {
-    goog.base(this);
+    my.Component.base(this, 'constructor');
 
     /** @type {goog.ui.Button} */
     this.button = new goog.ui.Button();
@@ -197,7 +235,7 @@ Let us consider a example where you have a component with composes a button whic
    * @override
    */
   my.Component.prototype.enterDocument = function () {
-    goog.base(this, 'enterDocument');
+    my.Component.base(this, 'enterDocument');
 
     /** @type {goog.events.EventHandler} */
     this.lifecycle = new goog.events.EventHandler(this);
@@ -221,7 +259,7 @@ Let us consider a example where you have a component with composes a button whic
     if(goog.isDefAndNotNull(this.lifecycle)) {
       this.lifecycle.dispose();
     }
-    goog.base(this, 'exitDocument');
+    my.Component.base(this, 'exitDocument');
   };
 
 

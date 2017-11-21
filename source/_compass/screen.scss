@@ -10,45 +10,5 @@
 @import "pages/post";
 @import "pages/home";
 @import "pages/profile";
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-
-
-h1 {
-  font-size: 30px;
-}
-
-a {
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-//.header, .content, .footer {
-//  padding: 10px 20px;
-//}
-
-.highlight {
-  padding: 20px;
-  margin: 10px 0;
-}
-
-
-ul li {
-  list-style: disc inside;
-}
-
-h2 {
-  margin: 20px 0;
-}
-
-h3 {
-  margin: 15px 0;
-}
-
+@import "default";
+@import "mobile";

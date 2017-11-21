@@ -1,24 +1,26 @@
 <div class="header span-24 last">
 
 
-  {% if page.hide_links %}
+    {% if page.hide_links %}
 
-  <div class="header-title span-24 last">
-    <h1><a href="/">slieb.org</a> {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} -
-      <a href="{{ page.url }}">{{ page.title }}</a>{% endif %}{% endif %}</h1>
-  </div>
+    <div class="header-title span-24 last">
+        <h1><a href="/">slieb.org</a> {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} -
+            <a href="{{ page.url }}">{{ page.title }}</a>{% endif %}{% endif %}</h1>
+    </div>
 
-  {% else %}
+    {% else %}
 
-  <div class="header-title span-12">
-    <h1><a href="/">slieb.org</a> {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} -
-      <a href="{{ page.url }}">{{ page.title }}</a>{% endif %}{% endif %}</h1>
-  </div>
+    <div class="header-title span-12">
+        <h1><a href="/">slieb.org</a> {% if page.slug %} / {{ page.slug }} {% else %}{% if page.title %} -
+            <a href="{{ page.url }}">{{ page.title }}</a>{% endif %}{% endif %}</h1>
+    </div>
 
-  <div class="header-links span-12 last">
-    About <a href="/me">/me</a>
-  </div>
+    <div class="header-links span-12 last">
+        <div class="header-links-content">
+            About <a href="/me">/me</a> or my <a href="/projects">/projects</a>
+        </div>
+    </div>
 
-  {% endif %}
+    {% endif %}
 
 </div>
